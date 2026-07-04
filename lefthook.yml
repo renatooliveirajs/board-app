@@ -1,0 +1,18 @@
+pre-commit:
+  commands:
+    typecheck:
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc,css}"
+      run: pnpm exec tsc --noEmit
+      stage_fixed: true
+    check:
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc,css}"
+      run: npx @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}
+      stage_fixed: true
+    test:
+      glob: "*.{js,ts,cjs,mjs,jsx,tsx}"
+      run: pnpm test
+
+commit-msg:
+  commands:
+    "lint commit message":
+      run: pnpm exec commitlint --edit {1}
